@@ -4,7 +4,7 @@
 }
 
 body {
-    background-color: #f6f8fc;
+    background-color: #c6c9cf;
 }
 
 
@@ -16,8 +16,9 @@ body {
 .content {
     padding: 1rem;
     background-color: #fff;
-    height: 100vh;
+    height: 100%;
     border-radius: 1rem;
+    margin: 1.5rem;
 }
 
 

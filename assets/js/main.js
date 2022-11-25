@@ -3,14 +3,17 @@ const pokemonList = document.getElementById('pokemonList')
 
 const loadMoreButton = document.getElementById('loadMoreButton')
 
+const openDetail = document.getElementsByClassName('pokemon')
+
+const maxRecords = 151;
 const limit = 12;
 let offset = 0;
 
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
         const newHtml = pokemons.map((pokemon) =>  `
-        <li class="pokemon ${pokemon.type}">
-            <span class="number">#${pokemon.order}</span>
+        <li onclick="openDetailView()" class="pokemon ${pokemon.type}">
+            <span class="number">#${pokemon.id}</span>
             <span class="name">${pokemon.name}</span>
 
             <div class="detail">
@@ -30,7 +33,27 @@ loadPokemonItens(offset, limit) ;
 
 loadMoreButton.addEventListener('click', () => {
     offset += limit
-    loadPokemonItens(offset, limit);
+
+    const qtdRecordsWithNextPage = offset + limit;
+
+    if (qtdRecordsWithNextPage >= maxRecords) {
+        const newLimit = maxRecords - offset;
+        loadPokemonItens(offset, newLimit);
+        
+        loadMoreButton.parentElement.removeChild(loadMoreButton);
+    }
+    else {
+        loadPokemonItens(offset, limit);
+    }
+    
 })
+
+function openDetailView() {
+    const id = this.pokemon.id;
+    window.open(`http://127.0.0.1:8080/detail-view?${id}`) ;
+}
+
+
+
 
   
