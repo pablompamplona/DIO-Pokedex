@@ -22,8 +22,6 @@ function convertPokeDetailToPokemon(pokeDetail) {
 
     pokemon.abilities = abilities
 
-    console.log(pokemon.abilities)
-
     const stats = pokeDetail.stats.map((statSlot) => statSlot.base_stat)
     const [base_stat] = stats
 
@@ -50,10 +48,11 @@ pokeApi.getPokemons = (offset, limit) => {
         .catch((error) => console.error(error))
 }
 
-pokeApi.getPokemonToView = (id) => {
+pokeApi.getPokemonToView = async (id) => {
     const url = `https://pokeapi.co/api/v2/pokemon/${id}`;
-    return fetch(url)
-        .then((response) => response.json())
-        .then(convertPokeDetailToPokemon)
+    const response = await fetch(url);
+    const pokeDetail = await response.json();
+    return convertPokeDetailToPokemon(pokeDetail);
 }
+
 

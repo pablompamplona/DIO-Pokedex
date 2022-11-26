@@ -12,7 +12,7 @@ let offset = 0;
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
         const newHtml = pokemons.map((pokemon) =>  `
-        <li onclick="openDetailView()" class="pokemon ${pokemon.type}">
+        <li onclick="openDetailView(${pokemon.id})" class="pokemon ${pokemon.type}">
             <span class="number">#${pokemon.id}</span>
             <span class="name">${pokemon.name}</span>
 
@@ -48,10 +48,10 @@ loadMoreButton.addEventListener('click', () => {
     
 })
 
-function openDetailView() {
-    const id = this.pokemon.id;
-    window.open(`http://127.0.0.1:8080/detail-view?${id}`) ;
+function openDetailView(id) {
+    window.location.href = `http://127.0.0.1:8080/detail-view?${id}`;
 }
+
 
 
 
